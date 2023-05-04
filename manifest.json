@@ -1,0 +1,21 @@
+{
+    "name": "Quora Auto Answer",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "description": "To auto answer on quora.com answer web page",
+    "permissions": ["tabs"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.quora.com/answer/*"],
+            "css": ["script2.css"],
+            "js": ["script.js"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Quora Auto Answer"
+    }
+}
