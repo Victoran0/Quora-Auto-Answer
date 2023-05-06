@@ -25,12 +25,14 @@
 // console.log(answer)
 
 
+
+
 const clickAnsBtn = () => {
-        const answerDiv = document.getElementsByClassName("q-box puppeteer_test_question_component_base")[0]
-        
-        const answerBtn = answerDiv.getElementsByClassName('q-click-wrapper qu-active--textDecoration--none qu-focus--textDecoration--none qu-borderRadius--pill qu-alignItems--center qu-justifyContent--center qu-whiteSpace--nowrap qu-userSelect--none qu-display--inline-flex qu-tapHighlight--white qu-textAlign--center qu-cursor--pointer qu-hover--textDecoration--none qu-hover--bg--darken ClickWrapper___StyledClickWrapperBox-zoqi4f-0 iyYUZT base___StyledClickWrapper-lx6eke-1 fJHGyh')[0];
-        
-        answerBtn.click()
+    const answerDiv = document.getElementsByClassName("q-box puppeteer_test_question_component_base")[0]
+    
+    const answerBtn = answerDiv.getElementsByClassName('q-click-wrapper qu-active--textDecoration--none qu-focus--textDecoration--none qu-borderRadius--pill qu-alignItems--center qu-justifyContent--center qu-whiteSpace--nowrap qu-userSelect--none qu-display--inline-flex qu-tapHighlight--white qu-textAlign--center qu-cursor--pointer qu-hover--textDecoration--none qu-hover--bg--darken ClickWrapper___StyledClickWrapperBox-zoqi4f-0 iyYUZT base___StyledClickWrapper-lx6eke-1 fJHGyh')[0];
+    
+    answerBtn.click()
 }
 
 
@@ -54,17 +56,36 @@ const autoAns = (func, time) => {
 
 //     commentFunc()
 // window.addEventListener('load', (e) => {
-
-//     console.log('all content loaded')
-//     clickAnsBtn()
+    
+    //     console.log('all content loaded')
+    //     clickAnsBtn()
 // })
 
 // setTimeout( () => {clickAnsBtn()}, 1000)
 // setTimeout( () => {commentFunc()}, 3000)
 
-autoAns(clickAnsBtn, 2000)
+// autoAns(clickAnsBtn, 2000)
+// .then(() => {return autoAns(commentFunc, 2000)})
+
 // autoAns(() => console.log('welcome '), 1000)
 // .then(() => {
-//     return autoAns(() => console.log('Second promise fired'), 1000)
-// })
-.then(() => {return autoAns(commentFunc, 2000)})
+    //     return autoAns(() => console.log('Second promise fired'), 1000)
+    // })
+
+
+    const ansAuto = async () => {
+        await autoAns(clickAnsBtn, 1000);
+        await autoAns(commentFunc, 2000)
+    }
+
+
+
+chrome.runtime.onMessage.addListener((obj, sender, response) => {
+    if (obj.message) {
+        // setTimeout(() => clickAnsBtn(), 1000)
+        // console.log('First Answer button Clicked')
+        // autoAns(clickAnsBtn, 1000)
+        // .then(() => {return autoAns(commentFunc, 2000)})
+        ansAuto()
+    }
+})
